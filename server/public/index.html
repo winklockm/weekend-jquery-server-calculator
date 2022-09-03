@@ -4,12 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Server Side Calculator</title>
     <script src="jquery.js" charset="utf-8"></script>
     <script src="client.js" charset="'utf-8"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Calculator</h1>
+    <header>
+        <h1>Server Side Calculator</h1>
+    </header>
+    <main>
+        <div>
+            <input id="inputNum1" type="number" placeholder="number">
+            <button id="addButton">+</button>
+            <button id="minusButton">-</button>
+            <button id="multiplyButton">x</button>
+            <button id="divideButton">÷</button>
+            <input id="inputNum2" type="number" placeholder="number">
+            <button id="equalButton">=</button>
+            <button id="clearButton">C</button>
+        </div>
+        <div>
+            <!-- answer populates here 👇🏻 -->
+            <h2><span id="answer"></span></h2>
+        </div>
+        <div>
+            <h3>Calculation History</h3>
+            <ul>
+                <!-- history populates here -->
+            </ul>
+        </div>
+    </main>
 </body>
 </html>
