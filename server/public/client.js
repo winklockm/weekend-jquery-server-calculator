@@ -1,7 +1,7 @@
 $(document).ready(onReady);
 
 function onReady(){
-    $('#equalButton').on('click', getArray)
+    $('#equalButton').on('click', calculateEquation)
 }
 
 function getArray(){
@@ -23,8 +23,32 @@ function getArray(){
             $('.calcHistory').append(`<li>${histNum1} ${histAction} ${histNum2} = ${histAnswer}</li>`);
         }
     }) 
-        
     }
+
+function calculateEquation() {
+    let num1 = $('#inputNum1').val();
+    let action = 'someAction';
+    let num2 = $('#inputNum2').val();
+    let answer = 'someAnswer';
+    $.ajax({
+        method: 'POST',
+        url: '/array',
+        data: {num1, action, num2, answer}
+        }).then(function(response) {
+            console.log('got a response. it is:', response);
+            getArray();
+        })
+}
+
+// POST REQUEST:
+// ✅ FE: listen for clicks on equals button
+// ✅ FE: get input values
+// ✅ FE: Send HTTP POST to /array AND send values we pulled from inputs
+// ✅ BE: Define a POST /array route on the server
+// ✅ BE: take data sent, make a new object and array.push it
+// ✅ BE: send status code 201
+// ✅ FE: call getArray function
+
 // GET REQUEST:
 // ✅ make equals button respond to clicks
 // ✅ FE: send GET request for the data
