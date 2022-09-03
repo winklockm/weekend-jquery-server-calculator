@@ -1,7 +1,8 @@
 $(document).ready(onReady);
 
 function onReady(){
-    $('#equalButton').on('click', calculateEquation)
+    $('#equalButton').on('click', calculateEquation);
+    //$('#clearButton').on('click', clearEquation);
 }
 
 function getArray(){
@@ -15,12 +16,12 @@ function getArray(){
         $('#answer').empty();
         $('#answer').append(currentAnswer);
         $('.calcHistory').empty();
-        for (let i = 1; i < array.length; i++) {
-            let histNum1 = array[i].num1;
-            let histAction = array[i].action;
-            let histNum2 = array[i].num2;
-            let histAnswer = array[i].answer;
-            $('.calcHistory').append(`<li>${histNum1} ${histAction} ${histNum2} = ${histAnswer}</li>`);
+        for (let object of array){
+            let histNum1 = object.num1;
+            let histAction = object.action;
+            let histNum2 = object.num2;
+            let histAnswer = object.answer;
+            $('.calcHistory').append(`<li>${histNum1} ${histAction} ${histNum2} = ${histAnswer}</li>`);  
         }
     }) 
     }
@@ -39,6 +40,41 @@ function calculateEquation() {
             getArray();
         })
 }
+
+// clear button - starting with the get request
+
+// function clearEquation(){
+//     console.log('in clearEquation');
+//     $.ajax({
+//         method: 'GET',
+//         url: '/clear'
+//     }).then(function(array) {
+//         console.log('/clear got a response');
+//         $('#answer').empty();
+//         $('.calcHistory').empty();
+//         for (object of array) {
+//             let histNum1 = object.num1;
+//             let histAction = object.action;
+//             let histNum2 = object.num2;
+//             let histAnswer = object.answer;
+//             $('.calcHistory').append(`<li>${histNum1} ${histAction} ${histNum2} = ${histAnswer}</li>`);
+//         }
+//     })
+// }
+
+
+// Clear button:
+// listen for click
+// get input values
+// put into object
+// clear input data
+// send post to server
+// server sends status back and triggers sending a get request
+// server receives get request and pushes the object into array
+// server sends array back
+// DOM displays ALL array information by looping through array and appending
+
+
 
 // POST REQUEST:
 // ✅ FE: listen for clicks on equals button

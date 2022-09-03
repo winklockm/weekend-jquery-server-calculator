@@ -12,30 +12,30 @@ app.use(express.static('server/public'));
 app.use(bodyParser.urlencoded({extended: true}));
 	
 let array = [
-	{
-		num1: 2,
-		action: '+',
-		num2: 4,
-		answer: 6,
-	},
-	{
-		num1: 5,
-		action: '-',
-		num2: 3,
-		answer: 2,
-	},
-	{
-		num1: 7,
-		action: '*',
-		num2: 8,
-		answer: 56,
-	},
-	{
-		num1: 12,
-		action: '/',
-		num2: 3,
-		answer: 4,
-	}
+	// {
+	// 	num1: 2,
+	// 	action: '+',
+	// 	num2: 4,
+	// 	answer: 6,
+	// },
+	// {
+	// 	num1: 5,
+	// 	action: '-',
+	// 	num2: 3,
+	// 	answer: 2,
+	// },
+	// {
+	// 	num1: 7,
+	// 	action: '*',
+	// 	num2: 8,
+	// 	answer: 56,
+	// },
+	// {
+	// 	num1: 12,
+	// 	action: '/',
+	// 	num2: 3,
+	// 	answer: 4,
+	// }
 ];
 	
 	
@@ -53,9 +53,12 @@ app.post('/array', (req, res) => {
 })
 
 
+// CLEAR BUTTON:
 
-
-
+app.get('/clear', (req, res) => {
+	console.log('/clear got a request');
+	res.send(array);
+})
 	
 	
 // Start the server:
