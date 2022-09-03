@@ -3,6 +3,14 @@ $(document).ready(onReady);
 function onReady(){
     $('#equalButton').on('click', calculateEquation);
     $('#clearButton').on('click', clearEquation);
+    $('.action').on('click', selectAction);
+}
+
+let operator = null;
+
+function selectAction(){
+    operator = $(this).data().id;
+    console.log('in selectAction. operator is: ', operator);
 }
 
 function getArray(){
@@ -12,7 +20,9 @@ function getArray(){
         url: '/array'
     }).then(function(array) {
         console.log('got a response');
-        let currentAnswer = array[0].answer;
+        console.log('here is the array received:', array);
+        let currentAnswer = array[array.length-1].answer;
+        console.log('current answer:', currentAnswer);
         $('#answer').empty();
         $('#answer').append(currentAnswer);
         $('.calcHistory').empty();
@@ -27,10 +37,24 @@ function getArray(){
     }
 
 function calculateEquation() {
-    let num1 = $('#inputNum1').val();
-    let action = 'someAction';
-    let num2 = $('#inputNum2').val();
-    let answer = 'someAnswer';
+    let num1 = parseFloat($('#inputNum1').val());
+    console.log('num1:', num1);
+    let action = operator;
+    let num2 = parseFloat($('#inputNum2').val());
+    console.log('num2:', num2);
+    if(action === '+') {
+        answer = num1+num2;
+    }
+    else if(action === '-') {
+        answer = num1-num2;
+    }
+    else if(action === '*') {
+        answer = num1*num2;
+    }
+    else if(action === '/') {
+        answer = num1/num2;
+    };
+    console.log('answer:', answer)
     $.ajax({
         method: 'POST',
         url: '/array',
@@ -46,6 +70,8 @@ function clearEquation(){
     // console.log('in clearEquation');
     $('#answer').empty();
     $('input').val('');
+    operator = null;
+    console.log(operator);
 }
 
 
@@ -67,3 +93,10 @@ function clearEquation(){
 // FE: when the array arrives: 
     //1) ✅ for the 0 index of the array, grab the .answer value and display to the DOM
     //2) ✅ for the 1 - array.length index of array, loop through and append a list to the dom.
+
+
+
+// if a button with a class of 'action' is clicked
+// $(this) pull the ID value
+// if ID value = add
+// 

@@ -52,14 +52,6 @@ app.post('/array', (req, res) => {
 	res.sendStatus(201);
 })
 
-
-// CLEAR BUTTON:
-
-app.get('/clear', (req, res) => {
-	console.log('/clear got a request');
-	res.send(array);
-})
-	
 	
 // Start the server:
 app.listen(PORT,()=>{
