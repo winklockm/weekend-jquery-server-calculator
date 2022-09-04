@@ -5,7 +5,6 @@ body {
 }
 
 button {
-    /* padding: 15px 25px; */
     width: 50px;
     height: 50px;
     margin: 10px; 
@@ -54,7 +53,6 @@ h1 {
 }
 
 .answerSpace {
- 
     font-family: "Lucida Console", "Courier New", monospace;
     height: 50px;
     width: 300px;
