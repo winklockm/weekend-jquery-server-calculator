@@ -34,7 +34,7 @@ function getArray(){
             $('.calcHistory').append(`<li>${histNum1} ${histAction} ${histNum2} = ${histAnswer}</li>`);  
         }
     }) 
-    }
+}
 
 function calculateEquation() {
     let num1 = parseFloat($('#inputNum1').val());
@@ -42,29 +42,17 @@ function calculateEquation() {
     let action = operator;
     let num2 = parseFloat($('#inputNum2').val());
     console.log('num2:', num2);
-    if(action === '+') {
-        answer = num1+num2;
+    if(num1 && operator && num2) {
+        $.ajax({
+            method: 'POST',
+            url: '/array',
+            data: {num1, action, num2}
+            }).then(function(response) {
+                console.log('got a response. it is:', response);
+                getArray();
+            })
     }
-    else if(action === '-') {
-        answer = num1-num2;
-    }
-    else if(action === '*') {
-        answer = num1*num2;
-    }
-    else if(action === '/') {
-        answer = num1/num2;
-    };
-    console.log('answer:', answer)
-    $.ajax({
-        method: 'POST',
-        url: '/array',
-        data: {num1, action, num2, answer}
-        }).then(function(response) {
-            console.log('got a response. it is:', response);
-            getArray();
-        })
 }
-
 
 function clearEquation(){
     // console.log('in clearEquation');
@@ -73,8 +61,6 @@ function clearEquation(){
     operator = null;
     console.log(operator);
 }
-
-
 
 // POST REQUEST:
 // ✅ FE: listen for clicks on equals button
@@ -93,10 +79,3 @@ function clearEquation(){
 // FE: when the array arrives: 
     //1) ✅ for the 0 index of the array, grab the .answer value and display to the DOM
     //2) ✅ for the 1 - array.length index of array, loop through and append a list to the dom.
-
-
-
-// if a button with a class of 'action' is clicked
-// $(this) pull the ID value
-// if ID value = add
-// 

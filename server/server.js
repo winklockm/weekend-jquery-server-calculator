@@ -11,47 +11,36 @@ app.use(express.static('server/public'));
 // Teach our server how to read JSON:
 app.use(bodyParser.urlencoded({extended: true}));
 	
-let array = [
-	// {
-	// 	num1: 2,
-	// 	action: '+',
-	// 	num2: 4,
-	// 	answer: 6,
-	// },
-	// {
-	// 	num1: 5,
-	// 	action: '-',
-	// 	num2: 3,
-	// 	answer: 2,
-	// },
-	// {
-	// 	num1: 7,
-	// 	action: '*',
-	// 	num2: 8,
-	// 	answer: 56,
-	// },
-	// {
-	// 	num1: 12,
-	// 	action: '/',
-	// 	num2: 3,
-	// 	answer: 4,
-	// }
-];
-	
+let array = [];
 	
 app.get('/array', (req, res) => {
 	console.log('/array got a request');
 	res.send(array);
 })
 	
-	
 app.post('/array', (req, res) => {
-	console.log('/array received a post');
 	let newObject = req.body;
+	let num1 = parseFloat(newObject.num1);
+	let action = newObject.action;
+	let num2 = parseFloat(newObject.num2);
+	let answer;
+    if(action === '+') {
+        answer = num1+num2;
+	}
+    else if(action === '-') {
+    	answer = num1-num2;
+    }
+    else if(action === '*') {
+    	answer = num1*num2;
+    }
+    else if(action === '/') {
+        answer = num1/num2;
+        };
+	newObject.answer = answer;
 	array.push(newObject);
+	console.log('array is now: ', array);
 	res.sendStatus(201);
 })
-
 	
 // Start the server:
 app.listen(PORT,()=>{
