@@ -9,8 +9,10 @@ function onReady(){
 let operator = null;
 
 function selectAction(){
+    $('.action').css("background-color", "#E71D36");
     operator = $(this).data().id;
     console.log('in selectAction. operator is: ', operator);
+    $(this).css("background-color", "#63232b")
 }
 
 function getArray(){
@@ -24,7 +26,7 @@ function getArray(){
         let currentAnswer = array[array.length-1].answer;
         console.log('current answer:', currentAnswer);
         $('#answer').empty();
-        $('#answer').append(currentAnswer);
+        $('#answer').append(currentAnswer).css("color", "white");
         $('.calcHistory').empty();
         for (let object of array){
             let histNum1 = object.num1;
@@ -60,6 +62,7 @@ function clearEquation(){
     $('input').val('');
     operator = null;
     console.log(operator);
+    $('.action').css("background-color", "#E71D36");
 }
 
 // POST REQUEST:
