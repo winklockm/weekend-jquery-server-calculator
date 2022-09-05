@@ -2,7 +2,7 @@ $(document).ready(onReady);
 
 function onReady(){
     $('#clearButton').on('click', clearDisplay);
-    // $('.data-delete').on('click', deleteItem);
+    $('.data-delete').on('click', deleteItem);
     $('.numButtons').on('click',displayNum );
     $('.action').on('click', handleOperator);
     $('#equalButton').on('click', calculateEquation);
@@ -102,5 +102,11 @@ function clearDisplay(){
 
 // did not get this working yet
 function deleteItem(){
-
+//this.currentoperand = this.currentoperand.toString().slice(0, -1)
+let currentText = $('.current').text();
+console.log(currentText);
+let sliceText = currentText.toString().slice(0, -1);
+console.log(sliceText);
+$('.current').empty();
+$('.current').append(sliceText);
 }
