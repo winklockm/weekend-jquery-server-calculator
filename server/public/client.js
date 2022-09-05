@@ -1,84 +1,106 @@
 $(document).ready(onReady);
 
 function onReady(){
+    $('#clearButton').on('click', clearDisplay);
+    // $('.data-delete').on('click', deleteItem);
+    $('.numButtons').on('click',displayNum );
+    $('.action').on('click', handleOperator);
     $('#equalButton').on('click', calculateEquation);
-    $('#clearButton').on('click', clearEquation);
-    $('.action').on('click', selectAction);
 }
 
+// global variables
+let input1 = null; 
 let operator = null;
+let input2 = null;
+let answer = null;
 
-function selectAction(){
-    $('.action').css("background-color", "#E71D36");
+// displays the selected button 
+// when a number is clicked, display that number in the CURRENT display
+function displayNum() {
+    let num = $(this).data().id;
+    $('.current').append(num);
+}
+
+// when operator is clicked
+function handleOperator() {
+    console.log('in handleOperator');
+    // set global input1 variable to what is in the current display
+    input1 = $('.current').text();
+    // set global operator variable to the operator button clicked
     operator = $(this).data().id;
-    console.log('in selectAction. operator is: ', operator);
-    $(this).css("background-color", "#63232b")
+    // move what is in the current display to the previous display with the operator
+    $('.previous').append(input1, operator);
+    $('.current').text('');
 }
 
-function getArray(){
-    console.log('in getarray');
-    $.ajax({
-        method: 'GET',
-        url: '/array'
-    }).then(function(array) {
-        console.log('got a response');
-        console.log('here is the array received:', array);
-        let currentAnswer = array[array.length-1].answer;
-        console.log('current answer:', currentAnswer);
-        $('#answer').empty();
-        $('#answer').append(currentAnswer).css("color", "white");
-        $('.calcHistory').empty();
-        for (let object of array){
-            let histNum1 = object.num1;
-            let histAction = object.action;
-            let histNum2 = object.num2;
-            let histAnswer = object.answer;
-            $('.calcHistory').append(`<li>${histNum1} ${histAction} ${histNum2} = ${histAnswer}</li>`);  
-        }
-    }) 
-}
-
+// when equals is clicked
 function calculateEquation() {
-    let num1 = parseFloat($('#inputNum1').val());
-    console.log('num1:', num1);
-    let action = operator;
-    let num2 = parseFloat($('#inputNum2').val());
-    console.log('num2:', num2);
-    if(num1 && operator && num2) {
+    console.log('in calculateEquation');
+    // set global input 2 variable to what is in the current display
+    input2 = $('.current').text();
+    // move what is in the current display to the previous display
+    $('.previous').append(input2);
+    $('.current').text('');
+    // if all variables are set, send POST to server
+    console.log(`input1 is ${input1}, operator is ${operator}, input2 is ${input2}`);
+    if(input1 && operator && input2) {
+        console.log('all variables are set');
+        // send POST to server
         $.ajax({
             method: 'POST',
             url: '/array',
-            data: {num1, action, num2}
-            }).then(function(response) {
-                console.log('got a response. it is:', response);
-                getArray();
-            })
+            data: {input1, operator, input2},
+        }).then(function(response){
+            console.log('got response:', response);
+            // trigger getArray function
+            getArray();
+        })
     }
+    else{
+        console.log('set inputs');
+    }
+        
 }
 
-function clearEquation(){
-    // console.log('in clearEquation');
-    $('#answer').empty();
-    $('input').val('');
+function getArray(){
+    console.log('in getArray');
+    // GET request for the array
+    $.ajax({
+        method: 'GET',
+        url: '/array',
+    }).then(function(array) {
+        console.log('got this array', array)
+        // set answer variable 
+        answer = array[array.length-1].result;
+        console.log(answer);
+        // display answer variable on current display
+        $('.current').append(answer);
+        // clear calHistory list
+        $('.calcHistory').empty();
+        // loop through array and display each equation in calcHistory list
+        for(equation of array) {
+            let histNum1 = equation.input1;
+            let operator = equation.operator;
+            let histNum2 = equation.input2;
+            let histAnswer = equation.result;
+            $('.calcHistory').append(`<li>${histNum1}${operator}${histNum2}=${histAnswer}</li>`);
+        }
+    })
+}
+
+function clearDisplay(){
+    console.log('in clearDisplay');
+    // clear current and previous displays
+    $('.current').text('');
+    $('.previous').text('');
+    // clear global variables
+    input1 = null;
     operator = null;
-    console.log(operator);
-    $('.action').css("background-color", "#E71D36");
+    input2 = null;
+    answer = null;
 }
 
-// POST REQUEST:
-// ✅ FE: listen for clicks on equals button
-// ✅ FE: get input values
-// ✅ FE: Send HTTP POST to /array AND send values we pulled from inputs
-// ✅ BE: Define a POST /array route on the server
-// ✅ BE: take data sent, make a new object and array.push it
-// ✅ BE: send status code 201
-// ✅ FE: call getArray function
+// did not get this working yet
+function deleteItem(){
 
-// GET REQUEST:
-// ✅ make equals button respond to clicks
-// ✅ FE: send GET request for the data
-// ✅ BE: create route on server to receive the GET request
-// ✅ BE: new route will send an array of objects as its response
-// FE: when the array arrives: 
-    //1) ✅ for the 0 index of the array, grab the .answer value and display to the DOM
-    //2) ✅ for the 1 - array.length index of array, loop through and append a list to the dom.
+}

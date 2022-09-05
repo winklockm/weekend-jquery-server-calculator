@@ -12,34 +12,39 @@ app.use(express.static('server/public'));
 app.use(bodyParser.urlencoded({extended: true}));
 	
 let array = [];
-	
+
+app.post('/array', (req, res) => {
+	// set variables
+	let newObject = req.body;
+	let num1 = parseFloat(newObject.input1);
+	let action = newObject.operator;
+	let num2 = parseFloat(newObject.input2);
+	// calculate answer and set result variable
+	let result;
+	if(action === '+') {
+		result = num1+num2;
+	}
+	else if(action === '-') {
+		result = num1-num2;
+	}
+	else if(action === '*') {
+		result = num1*num2;
+	}
+	else if(action === '/') {
+		result = num1/num2;
+	};
+	// add result to the new object
+	newObject.result = result;
+	// push newObject into the global array
+	array.push(newObject);
+	console.log('array is now', array);
+	// send status back
+	res.sendStatus(201);
+})
+
 app.get('/array', (req, res) => {
 	console.log('/array got a request');
 	res.send(array);
-})
-	
-app.post('/array', (req, res) => {
-	let newObject = req.body;
-	let num1 = parseFloat(newObject.num1);
-	let action = newObject.action;
-	let num2 = parseFloat(newObject.num2);
-	let answer;
-    if(action === '+') {
-        answer = num1+num2;
-	}
-    else if(action === '-') {
-    	answer = num1-num2;
-    }
-    else if(action === '*') {
-    	answer = num1*num2;
-    }
-    else if(action === '/') {
-        answer = num1/num2;
-        };
-	newObject.answer = answer;
-	array.push(newObject);
-	console.log('array is now: ', array);
-	res.sendStatus(201);
 })
 	
 // Start the server:

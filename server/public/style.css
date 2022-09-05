@@ -1,73 +1,81 @@
-body {
-    background-color: #2EC4B6;
-    text-align: center;
+*, *::before, *after {
+    box-sizing: border-box;
     font-family: "Lucida Console", "Courier New", monospace;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background-color: #2EC4B6;
+}
+
+.calculator-grid {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    min-height: 100vh;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: minmax(120px, auto) repeat(5, 100px);
 }
 
 button {
-    width: 50px;
-    height: 50px;
-    margin: 10px; 
-    font-size: 24px;
-    text-align: center;
-    cursor: pointer;
+    font-size: 2rem;
+    border: 1px solid white;
     outline: none;
-    color: #fff;
     background-color: #E71D36;
-    border: solid;
-    border-radius: 15px;
-    box-shadow: 0 4px #999;
     font-family: "Lucida Console", "Courier New", monospace;
+    border-radius: 1em;
 }
 
 button:hover {
-    background-color: #e71d35cc;
-}
-
-button:active {
-    background-color: #63232b;
-    box-shadow: 0 2px #666;
-    transform: translateY(4px);
-}
-
-footer {
-    text-align: left;
-    color: white;
-}
-
-input {
-    height: 50px;
-    background-color: white;
-    border-radius: 15px;
-    font-size: 24px;
-    text-align: center;
+    font-size: 2rem;
+    border: 1px solid white;
     outline: none;
-    border: solid;
-    border-radius: 15px;
-    box-shadow: 0 4px #999;
+    background-color: #d9bbbf;
+    font-family: "Lucida Console", "Courier New", monospace;
+}
+
+.span-two {
+    grid-column: span 2;
+}
+
+.display {
+    grid-column: 1 / -1;
+    background-color: rgb(27, 27, 27);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    flex-direction: column;
+    padding: 10px;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.previous {
+    color: rgba(255, 255, 255, 0.81);
+    font-size: 1.5rem;
+    font-family: "Lucida Console", "Courier New", monospace;
+}
+
+.current {
+    color: white;
+    font-size: 2.5rem;
     font-family: "Lucida Console", "Courier New", monospace;
 }
 
 h1 {
-    margin-bottom: 40px;
-}
-
-.answerSpace {
     font-family: "Lucida Console", "Courier New", monospace;
-    height: 50px;
-    width: 300px;
-    margin: auto;
-    margin-top: 30px;
-    border-radius: 15px;
-    font-size: 36px;
-    color: gray;
     text-align: center;
-    outline: none;
-    border: solid;
-    border-radius: 15px;
-    padding-top: 5px;
 }
 
-h2 {
-    font-weight: normal;
+.calcHistory {
+    font-size: 1.5rem;
+    font-family: "Lucida Console", "Courier New", monospace;
+    color: white;
+}
+
+h3 {
+    font-size: 1.5rem;
+    font-family: "Lucida Console", "Courier New", monospace;
+    color: white;
 }
