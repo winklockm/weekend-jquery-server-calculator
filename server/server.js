@@ -5,7 +5,7 @@ const app = express();
 // Importing the body-parser node module:
 const bodyParser = require('body-parser');
 // Create a variable whose value is the port address.
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 // Tell our server where the static assets live:
 app.use(express.static('server/public'));
 // Teach our server how to read JSON:
